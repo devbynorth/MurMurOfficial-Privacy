@@ -1,0 +1,37 @@
+name: "Enhanced Dependency Scanning"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '15 3 * * 7' # Weekly run on Sunday at 3:15 AM UTC
+
+jobs:
+  dependency_scan:
+    name: Dependency Audit with Visual Report
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install npm-audit-html
+      run: npm install -g npm-audit-html
+
+    - name: Audit Dependencies and Generate Report
+      run: |
+        if [ -f package.json ]; then
+          npm audit --json | npm-audit-html -o audit-report.html
+        else
+          echo "No supported package manager found. Skipping visual dependency scan."
+        fi
+
+    - name: Upload Audit Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: audit-report
+        path: ./audit-report.html
