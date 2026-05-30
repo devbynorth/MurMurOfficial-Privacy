@@ -1,0 +1,31 @@
+name: "CodeQL Analysis"
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '15 3 * * 1' # Weekly run on Monday at 3:15 AM UTC (adjust as needed)
+
+jobs:
+  analyze:
+    name: Analyze code for security vulnerabilities
+    runs-on: ubuntu-latest
+
+    permissions:
+      security-events: write
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up CodeQL
+      uses: github/codeql-action/init@v2
+      with:
+        languages: "javascript, python" # Adjust according to your repository's language.
+
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v2
