@@ -74,7 +74,7 @@
     <p>Eventuelle endringer i denne personvernerklæringen vil publiseres på denne siden med oppdatert dato. Vesentlige endringer vil også kommuniseres via appoppdatering i App Store.</p>
 
     <h2>9. Kontakt</h2>
-    <p>Har du spørsmål om personvern i MurMur, kontakt oss på: <a href="mailto:din-epost@example.com">din-epost@example.com</a></p>
+    <p>Har du spørsmål om personvern i MurMur, kontakt oss på: <a href="mailto:murmurofficial@icloud.com">martin.andersn@gmail.com</a></p>
 
     <p>Ved å bruke MurMur godtar du denne personvernerklæringen.</p>
 </body>
