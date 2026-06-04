@@ -32,5 +32,8 @@ MurMurOfficialOS/
 ├── 06 - Archive/        # Ferdige og arkiverte ting
 ├── 07 - Logs & Journal/ # Dagbøker, logger og ukentlige reviews
 ├── 08 - Systems & Habits/ # Rutiner, verktøy, regler og workflows
-└── 09 - Meta/           # Dokumentasjon av selve systemet
- 
+└── 09 - Meta/           # Dokumentasjon av selve This repository is licensed under the MurMur A Learning Constellations Proprietary License.
+
+See LICENSE.txt for details.
+
+
