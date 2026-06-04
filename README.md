@@ -1,4 +1,6 @@
 # MurMurOfficialOS 🧠
+This repository is licensed under the MurMur A Learning Constellations Proprietary License.
+See LICENSE.txt for details.
 
 **Mitt personlige operativsystem** — en digital second brain for kunnskap, produktivitet og vekst.
 
