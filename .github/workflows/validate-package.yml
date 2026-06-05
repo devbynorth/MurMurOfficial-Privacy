@@ -1,0 +1,19 @@
+name: Validate Package.json
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  validate-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Validate package.json
+        run: |
+          if [ ! -f package.json ]; then
+            echo "package.json is missing"; exit 1;
+          fi
