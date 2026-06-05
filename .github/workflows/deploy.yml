@@ -1,0 +1,46 @@
+name: Build and Deploy
+
+# Trigger workflow on pushes to the main branch
+on:
+  push:
+    branches:
+      - main
+
+# Setup the workflow jobs
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Sjekk ut koden til løpeområdet
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    # Sett opp riktig versjon av Node.js (kan tilpasses for andre teknologier)
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    # Installer avhengigheter
+    - name: Install dependencies
+      run: npm install
+
+    # Bygg prosjektet
+    - name: Build the project
+      run: npm run build
+
+  deploy:
+    needs: build  # Denne jobben kjører etter "build"
+    runs-on: ubuntu-latest
+
+    steps:
+    # Sjekk ut koden (igjen, for deploy-jobben)
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    # Distribuer til et valg av plattformer
+    - name: Deploy to Platform
+      run: |
+        # Eksempel for Netlify, ta i bruk deploy-kommando for din plattform
+        echo "Custom deploy command here"
