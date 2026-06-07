@@ -1,0 +1,18 @@
+name: Use Shared CI/CD Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  use-shared-workflow:
+    name: Build and Test via Shared Workflow
+    uses: Livsmestring/MURMUROS/.github/workflows/shared-ci-cd.yml@main
+    with:
+      node-version: 16
+      build-command: 'npm run build'
+      test-command: 'npm test'
+      deploy-command: 'npm run deploy:staging'
+    secrets:
+      API_KEY: ${{ secrets.API_KEY }}
