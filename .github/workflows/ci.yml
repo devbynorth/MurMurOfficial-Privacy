@@ -56,7 +56,6 @@ jobs:
 
       - name: Check privacy policy is not outdated
         run: |
-          # Extract the year from "Sist oppdatert: DD. MMM YYYY"
           YEAR=$(grep -oP '(?<=oppdatert: ).*' privacy.html | grep -oP '\d{4}' | tail -1)
           CURRENT_YEAR=$(date +%Y)
           if [ -z "$YEAR" ]; then
@@ -69,3 +68,29 @@ jobs:
             exit 1
           fi
           echo "Privacy policy is current (last updated $YEAR)."
+
+      - name: Check security headers present
+        run: |
+          if ! grep -q 'Content-Security-Policy' privacy.html; then
+            echo "ERROR: Missing Content-Security-Policy meta tag."
+            exit 1
+          fi
+          echo "Content-Security-Policy present."
+
+      - name: Check meta description present
+        run: |
+          if ! grep -q 'name="description"' privacy.html; then
+            echo "ERROR: Missing meta description tag."
+            exit 1
+          fi
+          echo "Meta description present."
+
+      - name: Check external links use rel=noopener
+        run: |
+          UNSAFE=$(grep -oP '<a [^>]*href="https?://[^"]*"[^>]*>' privacy.html | grep -v 'rel=.*noopener' || true)
+          if [ -n "$UNSAFE" ]; then
+            echo "ERROR: External link(s) missing rel=\"noopener noreferrer\":"
+            echo "$UNSAFE"
+            exit 1
+          fi
+          echo "All external links have rel=noopener."
