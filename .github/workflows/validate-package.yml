@@ -1,19 +1,44 @@
-name: Validate Package.json
+name: Validate Repository Structure
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  validate-package:
+  validate-structure:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Validate package.json
+      - name: Validate privacy policy exists
         run: |
-          if [ ! -f package.json ]; then
-            echo "package.json is missing"; exit 1;
+          if [ ! -f privacy.html ]; then
+            echo "ERROR: privacy.html is missing"
+            exit 1
           fi
+          echo "privacy.html found."
+
+      - name: Validate HTML is well-formed
+        run: |
+          if ! grep -q "<!DOCTYPE html>" privacy.html; then
+            echo "ERROR: Missing <!DOCTYPE html> declaration"
+            exit 1
+          fi
+          echo "DOCTYPE declaration found."
+
+      - name: Validate required metadata
+        run: |
+          if ! grep -q 'charset="UTF-8"' privacy.html; then
+            echo "ERROR: Missing charset meta tag"
+            exit 1
+          fi
+          if ! grep -q 'name="viewport"' privacy.html; then
+            echo "ERROR: Missing viewport meta tag"
+            exit 1
+          fi
+          echo "Required metadata present."

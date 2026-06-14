@@ -9,23 +9,88 @@ on:
       - main
 
 jobs:
-  test:
+  html-validate:
+    name: HTML Validation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-      
-      # Set up language-specific environments (Node.js, Python, etc.)
-      - name: Set up Node.js
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-      
-      - name: Install Dependencies
-        run: npm install
+          node-version: '18'
 
-      - name: Run Tests
-        run: npm test
+      - name: Install HTMLHint
+        run: npm install -g htmlhint
 
-      - name: Linting
-        run: npm run lint
+      - name: Lint HTML
+        run: htmlhint "**/*.html"
+
+  content-validate:
+    name: Content Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Check for placeholder email addresses
+        run: |
+          if grep -r "example\.com" --include="*.html" .; then
+            echo "ERROR: Placeholder email address found. Replace with a real contact address."
+            exit 1
+          fi
+          echo "No placeholder emails found."
+
+      - name: Check required privacy policy sections
+        run: |
+          MISSING=0
+          for section in "Ingen innsamling" "mikrofon" "Ingen datalagring" "sporing" "nettverkstilkobling" "Barns personvern" "rettigheter" "Endringer" "Kontakt"; do
+            if ! grep -qi "$section" privacy.html; then
+              echo "ERROR: Required section missing: $section"
+              MISSING=1
+            fi
+          done
+          if [ "$MISSING" -eq 1 ]; then exit 1; fi
+          echo "All required sections present."
+
+      - name: Check privacy policy is not outdated
+        run: |
+          YEAR=$(grep -oP '(?<=oppdatert: ).*' privacy.html | grep -oP '\d{4}' | tail -1)
+          CURRENT_YEAR=$(date +%Y)
+          if [ -z "$YEAR" ]; then
+            echo "ERROR: Could not find 'Sist oppdatert' date."
+            exit 1
+          fi
+          AGE=$((CURRENT_YEAR - YEAR))
+          if [ "$AGE" -gt 2 ]; then
+            echo "ERROR: Privacy policy was last updated in $YEAR ($AGE years ago). Please review and update."
+            exit 1
+          fi
+          echo "Privacy policy is current (last updated $YEAR)."
+
+      - name: Check security headers present
+        run: |
+          if ! grep -q 'Content-Security-Policy' privacy.html; then
+            echo "ERROR: Missing Content-Security-Policy meta tag."
+            exit 1
+          fi
+          echo "Content-Security-Policy present."
+
+      - name: Check meta description present
+        run: |
+          if ! grep -q 'name="description"' privacy.html; then
+            echo "ERROR: Missing meta description tag."
+            exit 1
+          fi
+          echo "Meta description present."
+
+      - name: Check external links use rel=noopener
+        run: |
+          UNSAFE=$(grep -oP '<a [^>]*href="https?://[^"]*"[^>]*>' privacy.html | grep -v 'rel=.*noopener' || true)
+          if [ -n "$UNSAFE" ]; then
+            echo "ERROR: External link(s) missing rel=\"noopener noreferrer\":"
+            echo "$UNSAFE"
+            exit 1
+          fi
+          echo "All external links have rel=noopener."

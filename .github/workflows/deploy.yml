@@ -1,46 +1,44 @@
 name: Build and Deploy
 
-# Trigger workflow on pushes to the main branch
 on:
   push:
     branches:
       - main
 
-# Setup the workflow jobs
 jobs:
-  build:
+  validate:
+    name: Validate before deploy
     runs-on: ubuntu-latest
-
     steps:
-    # Sjekk ut koden til løpeområdet
-    - name: Check out code
-      uses: actions/checkout@v3
+      - name: Check out code
+        uses: actions/checkout@v3
 
-    # Sett opp riktig versjon av Node.js (kan tilpasses for andre teknologier)
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 18
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
-    # Installer avhengigheter
-    - name: Install dependencies
-      run: npm install
+      - name: Install HTMLHint
+        run: npm install -g htmlhint
 
-    # Bygg prosjektet
-    - name: Build the project
-      run: npm run build
+      - name: Lint HTML
+        run: htmlhint "**/*.html"
+
+      - name: Verify no placeholder content
+        run: |
+          if grep -r "example\.com" --include="*.html" .; then
+            echo "ERROR: Placeholder content found. Deploy blocked."
+            exit 1
+          fi
 
   deploy:
-    needs: build  # Denne jobben kjører etter "build"
+    name: Deploy static site
+    needs: validate
     runs-on: ubuntu-latest
-
     steps:
-    # Sjekk ut koden (igjen, for deploy-jobben)
-    - name: Check out code
-      uses: actions/checkout@v3
+      - name: Check out code
+        uses: actions/checkout@v3
 
-    # Distribuer til et valg av plattformer
-    - name: Deploy to Platform
-      run: |
-        # Eksempel for Netlify, ta i bruk deploy-kommando for din plattform
-        echo "Custom deploy command here"
+      - name: Deploy to Platform
+        run: |
+          echo "Static site deploy command goes here (e.g. Netlify, GitHub Pages, Vercel)"
