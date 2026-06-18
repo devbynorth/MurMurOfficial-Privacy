@@ -8,7 +8,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '15 3 * * 7' # Weekly run on Sunday at 3:15 AM UTC
+    - cron: '15 3 * * 0' # Weekly run on Sunday at 3:15 AM UTC
 
 jobs:
   codeql_scan:
@@ -20,15 +20,15 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         languages: "javascript, python" # Adjust according to your repository's language
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
 
   dependency_scan:
     name: Dependency Scanning
@@ -36,7 +36,7 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Audit for Vulnerable Dependencies
       run: |
@@ -54,8 +54,11 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
 
     - name: Scan for Secrets
-      run: |
-        git-secrets --scan || true
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
