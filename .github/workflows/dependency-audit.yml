@@ -32,6 +32,7 @@ jobs:
 
     - name: Upload Audit Report
       uses: actions/upload-artifact@v4
+      if: hashFiles('audit-report.html') != ''
       with:
         name: audit-report
         path: ./audit-report.html
