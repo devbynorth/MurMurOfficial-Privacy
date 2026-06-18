@@ -44,7 +44,11 @@ jobs:
         if [ -f package.json ]; then
           npm audit || true
         elif [ -f requirements.txt ]; then
-          pip install safety && safety check -r requirements.txt || true
+          if pip install safety; then
+            safety check -r requirements.txt || true
+          else
+            echo "Failed to install safety; skipping requirements.txt scan"
+          fi
         else
           echo "No supported package manager found. Skipping dependency scan."
         fi
