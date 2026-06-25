@@ -7,6 +7,7 @@ on:
   pull_request:
     paths:
       - '**/*.html'
+  workflow_dispatch: {}
 
 jobs:
   accessibility:
@@ -25,4 +26,4 @@ jobs:
         run: npm install -g pa11y
 
       - name: Run accessibility audit
-        run: pa11y --standard WCAG2AA privacy.html
+        run: pa11y --standard WCAG2AA --chrome-launch-config '{"args":["--no-sandbox","--disable-setuid-sandbox"]}' privacy.html
