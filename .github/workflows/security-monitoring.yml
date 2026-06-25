@@ -26,7 +26,7 @@ jobs:
     - name: Set up CodeQL
       uses: github/codeql-action/init@v3
       with:
-        languages: "javascript, python" # Adjust according to your repository's language
+        languages: "actions" # This repo only contains privacy.html and workflow YAML; no JS/Python source exists
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
