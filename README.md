@@ -10,6 +10,8 @@ MurMur is a privacy-first iPhone app that turns ambient sound into real-time vis
 
 - `privacy.html` — the published privacy policy (last updated 30 May 2026)
 - `.github/workflows/` — CI pipeline: HTML validation, pa11y accessibility audits, dependency and secret scanning, and automated GitHub Pages deploy on push to `main`
+- [`LICENSE.txt`](LICENSE.txt) — MurMur A Learning Constellations Proprietary License
+- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) — community standards for contributors
 
 ## Making changes
 
