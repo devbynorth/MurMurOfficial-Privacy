@@ -60,6 +60,10 @@ jobs:
     name: Secret Scanning
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+      pull-requests: read # gitleaks-action calls pulls/{n}/commits when triggered on a PR
+
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
