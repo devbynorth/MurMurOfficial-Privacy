@@ -26,7 +26,7 @@ jobs:
           node-version: '18'
 
       - name: Install HTMLHint
-        run: npm install -g htmlhint
+        run: npm install -g htmlhint@1.9.2
 
       - name: Lint HTML
         run: htmlhint "**/*.html"

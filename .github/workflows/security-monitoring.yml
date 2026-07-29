@@ -50,7 +50,7 @@ jobs:
         if [ -f package.json ]; then
           npm audit || true
         elif [ -f requirements.txt ]; then
-          if pip install safety; then
+          if pip install safety==3.8.1; then
             safety check -r requirements.txt || true
           else
             echo "Failed to install safety; skipping requirements.txt scan"
