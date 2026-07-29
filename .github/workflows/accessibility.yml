@@ -9,6 +9,9 @@ on:
       - '**/*.html'
   workflow_dispatch: {}
 
+permissions:
+  contents: read
+
 jobs:
   accessibility:
     name: pa11y Accessibility Audit

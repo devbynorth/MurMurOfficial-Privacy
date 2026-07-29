@@ -10,6 +10,9 @@ on:
   schedule:
     - cron: '15 3 * * 0' # Weekly run on Sunday at 3:15 AM UTC
 
+permissions:
+  contents: read
+
 jobs:
   dependency_scan:
     name: Dependency Audit with Visual Report
