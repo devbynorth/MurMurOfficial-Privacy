@@ -10,6 +10,9 @@ on:
   schedule:
     - cron: '15 3 * * 0' # Weekly run on Sunday at 3:15 AM UTC
 
+permissions:
+  contents: read
+
 jobs:
   dependency_scan:
     name: Dependency Audit with Visual Report
@@ -17,10 +20,10 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
     - name: Install npm-audit-html
-      run: npm install -g npm-audit-html
+      run: npm install -g npm-audit-html@1.5.0
 
     - name: Audit Dependencies and Generate Report
       run: |
@@ -31,7 +34,7 @@ jobs:
         fi
 
     - name: Upload Audit Report
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
       if: hashFiles('audit-report.html') != ''
       with:
         name: audit-report
