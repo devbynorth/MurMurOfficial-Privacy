@@ -1,0 +1,33 @@
+MurMur A Learning Constellations Proprietary License
+
+Copyright (c) 2026 PapiiDLèon / MurMur. All rights reserved.
+
+1. Ownership
+   All content in this repository — including but not limited to the
+   privacy policy text, HTML, styling, and documentation — is the
+   proprietary property of the copyright holder.
+
+2. Permitted use
+   You may view this repository and access the published privacy policy
+   page for informational purposes, including verifying the privacy
+   practices of the MurMur iOS app.
+
+3. Restrictions
+   You may not copy, modify, redistribute, sublicense, or reuse any part
+   of this repository's content in other projects or publications without
+   prior written permission from the copyright holder.
+
+4. Contributions
+   By submitting a contribution (issue, pull request, or suggestion), you
+   grant the copyright holder a perpetual, irrevocable right to use,
+   modify, and incorporate that contribution without further obligation.
+
+5. No warranty
+   This repository and its contents are provided "as is", without warranty
+   of any kind, express or implied.
+
+For permission requests, open an issue at:
+https://github.com/devbynorth/MurMurOfficial-Privacy/issues
+
+Note: This is a plain-language proprietary license written without legal
+review. Consult a lawyer before relying on it for anything contractual.

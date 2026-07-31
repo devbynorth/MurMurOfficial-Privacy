@@ -1,41 +1,24 @@
-# MurMurOfficialOS 🧠
-This repository is licensed under the MurMur A Learning Constellations Proprietary License.
-See LICENSE.txt for details.
+# MurMur — Privacy Policy Site 🔒
 
-**Mitt personlige operativsystem** — en digital second brain for kunnskap, produktivitet og vekst.
+This repository hosts the official **privacy policy for the MurMur iOS app**, published via GitHub Pages. The page (`privacy.html`) is the privacy URL referenced by the App Store listing.
 
-Bygget og vedlikeholdt av **[PapiiDLèon](https://github.com/PapiiDLèon)**.
+## About MurMur
 
----
+MurMur is a privacy-first iPhone app that turns ambient sound into real-time visuals — 100% offline, with no data collection, no accounts, and no tracking. The policy on this site explains that in full (Norwegian).
 
-## 🌍 Om MurMurOfficialOS
+## Repository contents
 
-Dette er mitt sentrale knutepunkt for:
-- Personlig identitet og merkevare
-- Mål og visjon
-- Aktive prosjekter
-- Kunnskap og læring
-- Daglig produktivitet og refleksjon
+- `privacy.html` — the published privacy policy (last updated 30 May 2026)
+- `.github/workflows/` — CI pipeline: HTML validation, pa11y accessibility audits, dependency and secret scanning, and automated GitHub Pages deploy on push to `main`
+- [`LICENSE.txt`](LICENSE.txt) — MurMur A Learning Constellations Proprietary License
+- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) — community standards for contributors
 
-Inspirert av PARA-metoden, Tiago Forte, og egen erfaring som digital nomad som beveger seg mellom **Norge**, **Spania** og **Thailand**.
+## Making changes
 
----
+Any edit to `privacy.html` on `main` deploys automatically. Keep the "Sist oppdatert" date in sync with content changes. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## 📁 Struktur
+## Related
 
-```bash
-MurMurOfficialOS/
-├── 00 - Inbox/          # Rask capture — alt som kommer inn
-├── 01 - Identity/       # Hvem jeg er og hva jeg står for
-├── 02 - Goals & Vision/ # Mål, visjon og strategi
-├── 03 - Projects/       # Aktive prosjekter (f.eks. ProductivityKit)
-├── 04 - Areas/          # Livsområder som trenger kontinuerlig oppmerksomhet
-├── 05 - Resources/      # Kunnskapsbase og referanser
-├── 06 - Archive/        # Ferdige og arkiverte ting
-├── 07 - Logs & Journal/ # Dagbøker, logger og ukentlige reviews
-├── 08 - Systems & Habits/ # Rutiner, verktøy, regler og workflows
-└── 09 - Meta/           # Dokumentasjon av selve This repository is licensed under the MurMur A Learning Constellations Proprietary License.
+The **MurMurOfficialOS** second-brain notes that previously lived in this README have moved to the creator operating system in [`devbynorth/music-tools-agent-`](https://github.com/devbynorth/music-tools-agent-) (see `MurMurOS/` and `MURMUR_ARCHIVE_INDEX.md` there).
 
-See LICENSE.txt for details.
-
-
+Built and maintained by **PapiiDLèon**.
