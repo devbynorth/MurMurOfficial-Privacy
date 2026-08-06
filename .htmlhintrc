@@ -3,7 +3,7 @@
   "doctype-html5": true,
   "head-script-disabled": true,
   "style-disabled": false,
-  "script-disabled": false,
+  "script-disabled": true,
   "attr-lowercase": true,
   "attr-value-not-empty": true,
   "attr-no-duplication": true,
