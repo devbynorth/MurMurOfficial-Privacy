@@ -1,24 +1,29 @@
-# MurMur — Privacy Policy Site 🔒
+# MurMur — Public Signal Site & Privacy 🔒
 
-This repository hosts the official **privacy policy for the MurMur iOS app**, published via GitHub Pages. The page (`privacy.html`) is the privacy URL referenced by the App Store listing.
+This repository hosts the public MurMur Signal homepage and privacy pages via GitHub Pages.
 
-## About MurMur
+## Published routes
 
-MurMur is a privacy-first iPhone app that turns ambient sound into real-time visuals — 100% offline, with no data collection, no accounts, and no tracking. The policy on this site explains that in full (Norwegian).
+- `index.html` — public PapiiDLéon ◈│◈ MurMur homepage
+- `signal/privacy/index.html` — privacy information for MurMur Signal contact and lead-form submissions
+- `privacy.html` — existing privacy policy for the MurMur iOS app
 
-## Repository contents
+The iOS app privacy policy remains separate because that app is designed around offline use and no personal-data collection, while the Signal lead form may collect name, email, project type and project information voluntarily submitted by a visitor.
 
-- `privacy.html` — the published privacy policy (last updated 30 May 2026)
-- `.github/workflows/` — CI pipeline: HTML validation, pa11y accessibility audits, dependency and secret scanning, and automated GitHub Pages deploy on push to `main`
-- [`LICENSE.txt`](LICENSE.txt) — MurMur A Learning Constellations Proprietary License
-- [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) — community standards for contributors
+## Deployment
 
-## Making changes
+The GitHub Pages workflow validates all HTML, then publishes the homepage, the Signal privacy route and the unchanged iOS app privacy route on pushes to `main`.
 
-Any edit to `privacy.html` on `main` deploys automatically. Keep the "Sist oppdatert" date in sync with content changes. See [CONTRIBUTING.md](CONTRIBUTING.md).
+## Safety principles
 
-## Related
+- No credentials, API keys or tokens in frontend code.
+- No analytics or tracking by default.
+- No form may claim successful submission unless a backend is actually configured.
+- Privacy statements must match the actual data flow.
+- Consequential production changes should be reviewed before merge.
 
-The **MurMurOfficialOS** second-brain notes that previously lived in this README have moved to the creator operating system in [`devbynorth/music-tools-agent-`](https://github.com/devbynorth/music-tools-agent-) (see `MurMurOS/` and `MURMUR_ARCHIVE_INDEX.md` there).
+## Contact
 
-Built and maintained by **PapiiDLèon**.
+MurMurOfficial@icloud.com
+
+Built and maintained by **PapiiDLéon ◈│◈ MurMur**.

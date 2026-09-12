@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="PapiiDLéon ◈│◈ MurMur — Human × AI systems, sound and creative infrastructure.">
+  <meta name="theme-color" content="#070708">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; form-action 'none'; base-uri 'none';">
+  <title>PapiiDLéon ◈│◈ MurMur — Everything is a Signal</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070708;
+      --panel: #101012;
+      --panel-soft: #0c0c0f;
+      --text: #f4f1ea;
+      --muted: #aaa5a0;
+      --gold: #c7a66a;
+      --violet: #7d5cff;
+      --line: rgba(199, 166, 106, 0.22);
+      --line-violet: rgba(125, 92, 255, 0.24);
+      --max: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 16% 12%, rgba(125, 92, 255, 0.12), transparent 32rem),
+        radial-gradient(circle at 84% 18%, rgba(199, 166, 106, 0.09), transparent 28rem),
+        linear-gradient(180deg, #09090b 0%, var(--bg) 60%, #050506 100%);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+
+    .shell {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(7, 7, 8, 0.78);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav-inner {
+      min-height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .brand-mark { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 16px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      transition: color 160ms ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible { color: var(--text); }
+
+    .hero {
+      min-height: calc(100vh - 64px);
+      display: grid;
+      place-items: center;
+      padding: 88px 0 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before,
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(1px);
+    }
+
+    .hero::before {
+      width: min(74vw, 760px);
+      aspect-ratio: 1;
+      border: 1px solid var(--line-violet);
+      box-shadow:
+        0 0 80px rgba(125, 92, 255, 0.08),
+        inset 0 0 80px rgba(125, 92, 255, 0.04);
+      animation: signal 10s ease-in-out infinite;
+    }
+
+    .hero::after {
+      width: min(46vw, 470px);
+      aspect-ratio: 1;
+      border: 1px solid var(--line);
+      animation: signal 8s ease-in-out infinite reverse;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(48px, 9vw, 108px);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      font-weight: 760;
+    }
+
+    .signature {
+      margin: 24px 0 0;
+      font-size: clamp(18px, 3vw, 30px);
+      letter-spacing: 0.02em;
+    }
+
+    .signature .triangle { color: var(--gold); }
+
+    .hero-copy {
+      max-width: 680px;
+      margin: 26px auto 0;
+      color: var(--muted);
+      font-size: clamp(18px, 2.4vw, 23px);
+    }
+
+    .actions {
+      margin-top: 34px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .button:hover,
+    .button:focus-visible { transform: translateY(-2px); }
+
+    .button-primary {
+      color: #0b0b0c;
+      background: linear-gradient(135deg, #e4c98f, var(--gold));
+      border-color: transparent;
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.035);
+      border-color: var(--line-violet);
+    }
+
+    .trust {
+      margin: 22px 0 0;
+      color: #827e79;
+      font-size: 13px;
+      letter-spacing: 0.04em;
+    }
+
+    main section {
+      padding: 88px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.055);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+      gap: 48px;
+      align-items: start;
+      margin-bottom: 38px;
+    }
+
+    .kicker {
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 8px 0 0;
+      font-size: clamp(32px, 5vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -0.035em;
+    }
+
+    .section-copy {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 660px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      min-height: 220px;
+      padding: 24px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.018));
+      border: 1px solid rgba(255, 255, 255, 0.075);
+      box-shadow: inset 0 1px rgba(255, 255, 255, 0.035);
+    }
+
+    .card-label {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .card h3 {
+      margin: 16px 0 8px;
+      font-size: 24px;
+      line-height: 1.08;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .status {
+      display: inline-flex;
+      margin-top: 18px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(199, 166, 106, 0.09);
+      border: 1px solid var(--line);
+      color: #ddc28f;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+    }
+
+    .focus-card {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 20px;
+      align-items: stretch;
+      padding: 30px;
+      border-radius: 28px;
+      border: 1px solid var(--line);
+      background:
+        radial-gradient(circle at 86% 16%, rgba(199, 166, 106, 0.13), transparent 18rem),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.015));
+    }
+
+    .focus-card h3 {
+      margin: 8px 0 14px;
+      font-size: clamp(34px, 5vw, 64px);
+      letter-spacing: -0.035em;
+      line-height: 0.98;
+    }
+
+    .focus-card p {
+      color: var(--muted);
+      max-width: 560px;
+    }
+
+    .signal-orbit {
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .signal-orbit::before,
+    .signal-orbit::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .signal-orbit::before {
+      width: 190px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(199, 166, 106, 0.46);
+      box-shadow: 0 0 70px rgba(199, 166, 106, 0.08);
+    }
+
+    .signal-orbit::after {
+      width: 110px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(125, 92, 255, 0.55);
+    }
+
+    .signal-glyph {
+      position: relative;
+      z-index: 2;
+      font-size: 56px;
+      color: var(--gold);
+    }
+
+    .gate {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      counter-reset: gate;
+    }
+
+    .gate-step {
+      counter-increment: gate;
+      padding: 24px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.075);
+      background: var(--panel-soft);
+    }
+
+    .gate-step::before {
+      content: "0" counter(gate);
+      display: block;
+      margin-bottom: 34px;
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+    }
+
+    .gate-step strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 22px;
+    }
+
+    .gate-step span { color: var(--muted); }
+
+    .contact {
+      padding: 44px;
+      border-radius: 28px;
+      border: 1px solid var(--line-violet);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(125, 92, 255, 0.13), transparent 28rem),
+        var(--panel);
+      text-align: center;
+    }
+
+    .contact h2 { margin-top: 10px; }
+
+    .contact p {
+      max-width: 620px;
+      margin: 16px auto 0;
+      color: var(--muted);
+    }
+
+    footer {
+      padding: 34px 0 46px;
+      border-top: 1px solid rgba(255, 255, 255, 0.055);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-links a { text-underline-offset: 4px; }
+
+    @keyframes signal {
+      0%, 100% { transform: scale(0.97); opacity: 0.55; }
+      50% { transform: scale(1.04); opacity: 1; }
+    }
+
+    @media (max-width: 820px) {
+      .nav-inner { align-items: flex-start; padding: 16px 0; }
+      .nav-links { display: none; }
+      .hero { min-height: auto; padding: 112px 0 100px; }
+      .section-head { grid-template-columns: 1fr; gap: 18px; }
+      .grid, .gate, .focus-card { grid-template-columns: 1fr; }
+      .signal-orbit { min-height: 220px; }
+      main section { padding: 70px 0; }
+      .contact { padding: 34px 22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="shell nav-inner">
+      <a class="brand" href="#top" aria-label="PapiiDLéon MurMur home">PapiiDLéon <span class="brand-mark">◈│◈</span> MurMur 🔺</a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#signal">Signal</a>
+        <a href="#music">Music</a>
+        <a href="#systems">Systems</a>
+        <a href="#human-gate">Human Gate</a>
+        <a href="#contact">Contact</a>
+        <a href="signal/privacy/">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="shell hero-content">
+        <p class="eyebrow">MurMur Signal System</p>
+        <h1 id="hero-title">Everything is a Signal.</h1>
+        <p class="signature">PapiiDLéon <span aria-hidden="true">◈│◈</span> MurMur <span class="triangle">🔺</span></p>
+        <p class="hero-copy">Human × AI systems, sound and creative infrastructure — built to preserve identity, provenance and human decision.</p>
+        <div class="actions">
+          <a class="button button-primary" href="mailto:MurMurOfficial@icloud.com?subject=Enter%20the%20Signal">Enter the Signal</a>
+          <a class="button button-secondary" href="#systems">Explore MurMur</a>
+        </div>
+        <p class="trust">Human review. Clear provenance. No silent approval.</p>
+      </div>
+    </section>
+
+    <section id="signal">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <span class="kicker">01 // Signal</span>
+            <h2>From instinct to structure.</h2>
+          </div>
+          <p class="section-copy">MurMur turns creative signals into structured projects, collaborations and releases without erasing the human source. The system can assist, verify and organize. Final authority stays human.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="music">
+      <div class="shell">
+        <div class="focus-card">
+          <div>
+            <span class="kicker">Current signal // Music</span>
+            <h3>Animal Signal</h3>
+            <p>1/10 in the upcoming PapiiDLéon ◈│◈ MurMur album sequence. A dark, instinctive signal world built around identity, rhythm and organic animal energy.</p>
+            <span class="status">UPCOMING // 1 OF 10</span>
+            <div class="actions" style="justify-content:flex-start">
+              <a class="button button-secondary" href="mailto:MurMurOfficial@icloud.com?subject=Animal%20Signal">Enter the Signal</a>
+            </div>
+          </div>
+          <div class="signal-orbit" aria-label="Abstract signal mark">
+            <div class="signal-glyph" aria-hidden="true">◈│◈</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="systems">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <span class="kicker">02 // Systems</span>
+            <h2>Creative infrastructure with a gate.</h2>
+          </div>
+          <p class="section-copy">Music, workflow and release systems designed around traceability and explicit approval. Pilot and prototype work stays labelled honestly until verified.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <span class="card-label">Music</span>
+            <h3>Signal Music</h3>
+            <p>Artist identity, production, performance direction and rights-aware release workflow.</p>
+          </article>
+          <article class="card">
+            <span class="card-label">Human × AI</span>
+            <h3>Creative Systems</h3>
+            <p>Modular workflows where AI can propose and organize while consequential decisions remain explicit.</p>
+            <span class="status">PILOT / R&amp;D</span>
+          </article>
+          <article class="card">
+            <span class="card-label">Review</span>
+            <h3>Signal Audit</h3>
+            <p>Structured review of creative or technical workflows to map friction, risk and improvement opportunities.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="human-gate">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <span class="kicker">03 // Human Gate</span>
+            <h2>Human final authority.</h2>
+          </div>
+          <p class="section-copy">The rule is simple: automation can accelerate preparation, but it does not silently authorize the outcome.</p>
+        </div>
+        <div class="gate">
+          <div class="gate-step"><strong>AI proposes.</strong><span>Ideas, transformations and recommendations are prepared.</span></div>
+          <div class="gate-step"><strong>System verifies.</strong><span>Source, status, provenance and unresolved risk are surfaced.</span></div>
+          <div class="gate-step"><strong>Human decides.</strong><span>Approval is explicit, scoped and tied to the reviewed version.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="shell">
+        <div class="contact">
+          <span class="kicker">04 // Enter the Signal</span>
+          <h2>Bring the project. Keep the identity.</h2>
+          <p>For artists, vocalists and creative collaborators. Tell us what you are building. Requests are reviewed by a human before any commitment is made.</p>
+          <div class="actions">
+            <a class="button button-primary" href="mailto:MurMurOfficial@icloud.com?subject=Enter%20the%20Signal">MurMurOfficial@icloud.com</a>
+            <a class="button button-secondary" href="signal/privacy/">Privacy</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div>PapiiDLéon ◈│◈ MurMur 🔺</div>
+      <div class="footer-links">
+        <a href="mailto:MurMurOfficial@icloud.com">Contact</a>
+        <a href="signal/privacy/">Signal Privacy</a>
+        <a href="privacy.html">MurMur iOS App Privacy</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

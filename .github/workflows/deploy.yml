@@ -51,9 +51,10 @@ jobs:
 
       - name: Prepare site directory
         run: |
-          mkdir -p dist
-          cp privacy.html dist/index.html
+          mkdir -p dist/signal/privacy
+          cp index.html dist/index.html
           cp privacy.html dist/privacy.html
+          cp signal/privacy/index.html dist/signal/privacy/index.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
