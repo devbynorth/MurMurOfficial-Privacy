@@ -28,5 +28,11 @@ jobs:
       - name: Install pa11y
         run: npm install -g pa11y@9.1.1
 
-      - name: Run accessibility audit
+      - name: Run accessibility audit — homepage
+        run: pa11y --standard WCAG2AA --config .pa11yrc.json index.html
+
+      - name: Run accessibility audit — Signal privacy
+        run: pa11y --standard WCAG2AA --config .pa11yrc.json signal/privacy/index.html
+
+      - name: Run accessibility audit — iOS app privacy
         run: pa11y --standard WCAG2AA --config .pa11yrc.json privacy.html
