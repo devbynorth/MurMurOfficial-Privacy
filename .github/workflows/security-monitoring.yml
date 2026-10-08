@@ -31,8 +31,8 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@4187e74d05793876e9989daffde9c3e66b4acd07 # v3
-      with:
-        upload: never # code scanning / GitHub Advanced Security isn't enabled on this private repo, so SARIF upload fails
+      # Repo is public, so code scanning is available: results upload to the
+      # Security tab instead of being discarded.
 
   dependency_scan:
     name: Dependency Scanning
