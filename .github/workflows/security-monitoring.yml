@@ -30,7 +30,7 @@ jobs:
         languages: "actions" # This repo only contains privacy.html and workflow YAML; no JS/Python source exists
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@4187e74d05793876e9989daffde9c3e66b4acd07 # v3
+      uses: github/codeql-action/analyze@f205ea1c3313d32999d8d6a48b4f6530d4437b38 # v3
       with:
         upload: never # code scanning / GitHub Advanced Security isn't enabled on this private repo, so SARIF upload fails
 
