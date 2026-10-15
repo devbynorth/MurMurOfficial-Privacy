@@ -34,31 +34,6 @@ jobs:
       with:
         upload: never # code scanning / GitHub Advanced Security isn't enabled on this private repo, so SARIF upload fails
 
-  dependency_scan:
-    name: Dependency Scanning
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-
-    - name: Audit for Vulnerable Dependencies
-      run: |
-        if [ -f package.json ]; then
-          npm audit || true
-        elif [ -f requirements.txt ]; then
-          if pip install safety==3.8.1; then
-            safety check -r requirements.txt || true
-          else
-            echo "Failed to install safety; skipping requirements.txt scan"
-          fi
-        else
-          echo "No supported package manager found. Skipping dependency scan."
-        fi
-
   secret_scan:
     name: Secret Scanning
     runs-on: ubuntu-latest

@@ -28,20 +28,28 @@ jobs:
 
       - name: Validate HTML is well-formed
         run: |
-          if ! grep -q "<!DOCTYPE html>" privacy.html; then
-            echo "ERROR: Missing <!DOCTYPE html> declaration"
-            exit 1
-          fi
-          echo "DOCTYPE declaration found."
+          MISSING=0
+          for page in $(git ls-files '*.html'); do
+            if ! grep -q "<!DOCTYPE html>" "$page"; then
+              echo "ERROR: Missing <!DOCTYPE html> declaration in $page"
+              MISSING=1
+            fi
+          done
+          if [ "$MISSING" -eq 1 ]; then exit 1; fi
+          echo "DOCTYPE declaration found on every page."
 
       - name: Validate required metadata
         run: |
-          if ! grep -q 'charset="UTF-8"' privacy.html; then
-            echo "ERROR: Missing charset meta tag"
-            exit 1
-          fi
-          if ! grep -q 'name="viewport"' privacy.html; then
-            echo "ERROR: Missing viewport meta tag"
-            exit 1
-          fi
-          echo "Required metadata present."
+          MISSING=0
+          for page in $(git ls-files '*.html'); do
+            if ! grep -q 'charset="UTF-8"' "$page"; then
+              echo "ERROR: Missing charset meta tag in $page"
+              MISSING=1
+            fi
+            if ! grep -q 'name="viewport"' "$page"; then
+              echo "ERROR: Missing viewport meta tag in $page"
+              MISSING=1
+            fi
+          done
+          if [ "$MISSING" -eq 1 ]; then exit 1; fi
+          echo "Required metadata present on every page."
