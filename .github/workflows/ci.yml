@@ -22,7 +22,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
-          node-version: '18'
+          node-version: '22'
 
       - name: Install HTMLHint
         run: npm install -g htmlhint@1.9.2
@@ -72,25 +72,36 @@ jobs:
           fi
           echo "Privacy policy is current (last updated $YEAR)."
 
+      # Every published page, not only privacy.html: the Signal homepage and
+      # privacy route are public too.
       - name: Check security headers present
         run: |
-          if ! grep -q 'Content-Security-Policy' privacy.html; then
-            echo "ERROR: Missing Content-Security-Policy meta tag."
-            exit 1
-          fi
-          echo "Content-Security-Policy present."
+          MISSING=0
+          for page in $(git ls-files '*.html'); do
+            if ! grep -q 'Content-Security-Policy' "$page"; then
+              echo "ERROR: Missing Content-Security-Policy meta tag in $page."
+              MISSING=1
+            fi
+          done
+          if [ "$MISSING" -eq 1 ]; then exit 1; fi
+          echo "Content-Security-Policy present on every page."
 
       - name: Check meta description present
         run: |
-          if ! grep -q 'name="description"' privacy.html; then
-            echo "ERROR: Missing meta description tag."
-            exit 1
-          fi
-          echo "Meta description present."
+          MISSING=0
+          for page in $(git ls-files '*.html'); do
+            if ! grep -q 'name="description"' "$page"; then
+              echo "ERROR: Missing meta description tag in $page."
+              MISSING=1
+            fi
+          done
+          if [ "$MISSING" -eq 1 ]; then exit 1; fi
+          echo "Meta description present on every page."
 
       - name: Check external links use rel=noopener
         run: |
-          UNSAFE=$(grep -oP '<a [^>]*href="https?://[^"]*"[^>]*>' privacy.html | grep -v 'rel=.*noopener' || true)
+          # shellcheck disable=SC2046
+          UNSAFE=$(grep -oP '<a [^>]*href="https?://[^"]*"[^>]*>' $(git ls-files '*.html') | grep -v 'rel=.*noopener' || true)
           if [ -n "$UNSAFE" ]; then
             echo "ERROR: External link(s) missing rel=\"noopener noreferrer\":"
             echo "$UNSAFE"
